@@ -1,8 +1,10 @@
 from fastapi import APIRouter
 
+from app.api.v1 import content
 from app.core.config import get_settings
 
 router = APIRouter()
+router.include_router(content.router)
 
 
 @router.get("/info", tags=["meta"])
