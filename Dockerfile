@@ -10,10 +10,10 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --frozen --no-dev --no-install-project
 
-COPY app ./app
+COPY src ./src
 
 FROM python:3.12-slim
-ENV PATH="/app/.venv/bin:$PATH" PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+ENV PATH="/app/.venv/bin:$PATH" PYTHONPATH=/app/src PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 WORKDIR /app
 RUN useradd --system --no-create-home --uid 10001 appuser
 COPY --from=builder --chown=appuser:appuser /app /app
