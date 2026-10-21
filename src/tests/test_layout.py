@@ -2,7 +2,7 @@
 import tomllib
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "src" / "app"
 
 
@@ -31,3 +31,8 @@ def test_dockerfile_copies_src():
     text = (ROOT / "Dockerfile").read_text()
     assert "src" in text
     assert "app.main:app" in text
+
+
+def test_tests_live_under_src():
+    assert (ROOT / "src" / "tests" / "test_layout.py").is_file()
+    assert not (ROOT / "tests").exists()
